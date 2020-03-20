@@ -28,7 +28,7 @@ setuptools.setup(
     description="A Python API wrapper to Statistics Denmark's DataBank API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="",  # enter url when ready
+    url="https://github.com/gmohandas/denstatbank.git",
     packages=setuptools.find_packages(),
     classifiers=[
         "Development Status :: 3 - Alpha",
