@@ -1,12 +1,29 @@
 # denstatbank
 
-A python client to the [Databank API](https://www.dst.dk/en/Statistik/statistikbanken/api) of [Statistics Denmark](https://www.dst.dk/en).
-The library allows you to interface with the Statistics Denmark public database.
+A wrapper to Statistics Denmark's DataBank API.
+The library allows you to easily retrieve data on a variety of topics made available by [Statistics Denmark](https://www.dst.dk/en) 
 
-Statistics Denmark makes available data on a variety of subjects. The data itself is contained within tables that number in the thousands.
+The package provides a simple interface for professional statisticians, academics, policymakers, students, 
+and anyone interested in quantitative facts about Denmark.
 
 ### Installation
 
-```python
+```
 pip install denstatbank
 ```
+
+### Usage
+
+Quick Example 
+```python
+>>> from denstatbank import StatBankClient
+>>> sbc = StatBankClient(lang='en')
+>>> df = sbc.get_data(table_id='bef5')
+>>> df
+   Population 1. January by Indhold and time
+0                                    5822763
+```
+
+
+### DataBank API
+The official API documentation can be found [here](https://www.dst.dk/en/Statistik/statistikbanken/api)
