@@ -1,4 +1,5 @@
 # denstatbank
+![denstatbank](https://github.com/gmohandas/denstatbank/workflows/denstatbank/badge.svg)
 
 A wrapper to Statistics Denmark's DataBank API.
 The library allows you to easily retrieve data on a variety of topics made available by [Statistics Denmark](https://www.dst.dk/en) 
