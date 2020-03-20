@@ -34,7 +34,7 @@ setuptools.setup(
         "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
-        "License :: OSI Approved :: BSD3 License",
+        "License :: OSI Approved :: BSD 3-Clause 'New' or 'Revised' License (BSD-3-Clause)",
         "Operating System :: OS Independent",
     ],
     # Specify which Python versions you support. In contrast to the
