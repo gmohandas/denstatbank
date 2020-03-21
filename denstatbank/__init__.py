@@ -1,2 +1,4 @@
-name = "denstatbank"
-__version__ = "0.2.0"
+from .denstatbank import StatBankClient
+
+__name__ = "denstatbank"
+__version__ = "0.2.1"
