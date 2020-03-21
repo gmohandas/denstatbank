@@ -32,7 +32,7 @@ class StatBankClient:
         except Exception as err:
             print(err)
 
-    def get_subjects(self, subjects=None, include_tables=False, recursive=False, as_tree=True):
+    def subjects(self, subjects=None, include_tables=False, recursive=False, as_tree=True):
         """Retrieves the basic subject(s) information for which tables exist in
         the StatBank database.
 
@@ -69,7 +69,7 @@ class StatBankClient:
                     for g in subtabtree(d):
                         print(g)
 
-    def get_tables(self, subjects=None, past_days=None, include_inactive=False, as_df=True):
+    def tables(self, subjects=None, past_days=None, include_inactive=False, as_df=True):
         """Retrieves the complete list of tables present currently in the
         Statbank database together with relevant metadata.
 
@@ -99,7 +99,7 @@ class StatBankClient:
         else:
             return rjson
 
-    def get_tableinfo(self, table_id, variables_df=False):
+    def tableinfo(self, table_id, variables_df=False):
         """Retrieves table specific information from the StatBank database.
 
         Parameters
@@ -131,7 +131,7 @@ class StatBankClient:
         else:
             return rjson
 
-    def get_data(self, table_id, as_df=True, variables=None, **kwargs):
+    def data(self, table_id, as_df=True, variables=None, **kwargs):
         """Retrieves the data for a specific table from the StatBank
         database.
 
@@ -177,7 +177,7 @@ class StatBankClient:
 
         These dictionaries may be included as values to a
         dictionary with 'variables' key which may then be
-        passed as kwarg to the get_data() method.
+        passed as kwarg to the data() method.
         """
         var_dict = {'code': [], 'values': []}
         var_dict['code'] = code
