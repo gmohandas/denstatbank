@@ -139,8 +139,8 @@ def test_data_returns_df(client, monkeypatch):
     assert isinstance(d, pd.DataFrame)
 
 
-def test_make_variables_dict(client):
-    kon = client.make_variable_dict(code='køn', values=['M', 'K'])
+def test_variables_dict(client):
+    kon = client.variable_dict(code='køn', values=['M', 'K'])
     assert isinstance(kon, dict)
     assert 'code' in kon.keys()
     assert 'values' in kon.keys()
@@ -148,7 +148,7 @@ def test_make_variables_dict(client):
     assert isinstance(kon['values'], list)
     assert kon['values'] == ['M', 'K']
 
-    tid = client.make_variable_dict(code='tid', values='2018')
+    tid = client.variable_dict(code='tid', values='2018')
     assert isinstance(tid, dict)
     assert 'code' in tid.keys()
     assert 'values' in tid.keys()
