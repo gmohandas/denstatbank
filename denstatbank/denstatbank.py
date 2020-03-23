@@ -5,6 +5,18 @@ from .utils import data_dict_to_df, add_list_to_dict, subtabtree
 
 
 class StatBankClient:
+    """Client that connects to the Databank API of Statistics Denmark.
+
+    Attributes
+    ----------
+    lang : str, {'da', 'en'} default is 'da'
+        Note: Variable key codes to be passed when requesting specific data
+        must be in Danish. Please see data() method docstring for details. 
+        As long as Danish key codes are provided as input, one can use the 
+        Class with English language settings.
+
+    """
+
     def __init__(self, lang='da'):
         self._lang = lang
         self.session = requests.session()
@@ -17,7 +29,8 @@ class StatBankClient:
     @lang.setter
     def lang(self, value):
         if value not in ['en', 'da']:
-            raise ValueError('Language can only accept either "en" or "da" as values.')
+            raise ValueError(
+                'Language can only accept either "en" or "da" as values.')
         self._lang = value
 
     def base_request(self, cat, params):
@@ -56,6 +69,24 @@ class StatBankClient:
         Returns
         -------
         list of dicts, or prints a tree structure.
+
+        Examples
+        --------
+
+        >>> sbc.subjects(['19'], recursive=True)
+                 |--('19', 'Other')
+                 |       |--('2473', 'Statistisk Årbog')
+                 |       |--('2472', 'Statistisk Tiårsoversigt')
+                 |       |--('2475', 'Danmark i Tal')
+                 |       |--('2474', 'Nordic Statistical Yearbook')
+                 |       |--('2483', 'Publications')
+                 |       |       |--('10392', 'Generel publications')
+                 |       |       |--('10393', 'Methodology')
+                 |       |       |--('10394', 'Nomenclatures and classifications')
+                 |       |--('2482', 'Municipal service indicators')
+                 |       |       |--('10376', 'Elderly care')
+                 |       |       |--('10378', 'Disadvantaged children and young people')
+                 |       |       |--('10377', 'Health')ss
         """
         cat = 'subjects'
         params = dict(includeTables=include_tables, recursive=recursive)
@@ -89,6 +120,23 @@ class StatBankClient:
         Returns
         -------
         pd.DataFrame or list of dicts
+
+        Examples
+        --------
+        >>> df = sbc.tables()
+        >>> df.iloc[0]
+        id                                                  FOLK1A
+        text            Population at the first day of the quarter
+        unit                                                number
+        updated                                2020-02-11T08:00:00
+        firstPeriod                                         2008Q1
+        latestPeriod                                        2020Q1
+        active                                                True
+        variables         [region, sex, age, marital status, time]
+        Name: 0, dtype: object
+
+        >>> df.shape
+        (2116, 8)
         """
         cat = 'tables'
         params = dict(pastdays=past_days, includeinactive=include_inactive)
@@ -113,6 +161,18 @@ class StatBankClient:
         Returns
         -------
         dict or pd.DataFrame
+
+        Examples
+        --------
+
+        >>> vdf = sbc.tableinfo(table_id='bef5', variables_df=True)
+        >>> vdf.head()
+          id     text variable
+        0  M     Mænd      KØN
+        1  K  Kvinder      KØN
+        0  0     0 år    ALDER
+        1  1     1 år    ALDER
+        2  2     2 år    ALDER
         """
         cat = 'tableinfo'
         params = dict(table=table_id)
@@ -150,6 +210,33 @@ class StatBankClient:
         Returns
         -------
         Single or multi-indexed pd.DataFrame or dict
+
+        Examples
+        --------
+
+        Data with no specific keywords returns a simple pandas dataframe
+        >>> sbc.data(table_id='folk1a')
+                Folketal den 1. i kvartalet efter Indhold og tid
+            0                                           5822763
+
+        Data with specific keywords returns a multi-indexed pandas dataframe
+        >>> fodland = sbc.variable_dict(code='fodland', values=['5101','5104'])
+        >>> kon = sbc.variable_dict('køn', ['M', 'K'])
+        >>> tid = sbc.variable_dict('Tid', ['2018', '2019'])
+        >>> df = sbc.data('bef5', as_df=True, variables=[kon, tid, fodland]) 
+        >>> df
+                               Folketal pr. 1. januar efter køn, fødeland, Indhold og tid
+        køn     fodland  tid                                                             
+        Mænd    Grønland 2018                                               7016         
+                         2019                                               7095         
+                Finland  2018                                               1266         
+                         2019                                               1263         
+        Kvinder Grønland 2018                                               9454         
+                         2019                                               9471         
+                Finland  2018                                               2766         
+                         2019                                               2787  
+
+
         """
         cat = 'data'
         params = dict(format='JSONSTAT', table=table_id)
@@ -164,7 +251,7 @@ class StatBankClient:
             return rjson
 
     @staticmethod
-    def make_variable_dict(code, values, **kw):
+    def variable_dict(code, values, **kw):
         """Utility method to generate dictionary for a specific
         variable to select data from a table.
         ** Code and values must be in Danish. **
@@ -178,6 +265,13 @@ class StatBankClient:
         These dictionaries may be included as values to a
         dictionary with 'variables' key which may then be
         passed as kwarg to the data() method.
+
+        Examples
+        --------
+
+        >>> tid = sbc.variable_dict('Tid', ['2018', '2019'])
+        >>> tid
+        {'code': 'Tid', 'values': ['2018', '2019']}
         """
         var_dict = {'code': [], 'values': []}
         var_dict['code'] = code
