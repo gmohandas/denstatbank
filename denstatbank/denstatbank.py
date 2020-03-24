@@ -211,12 +211,10 @@ class StatBankClient:
 
         Examples
         --------
-        Data with no specific keywords returns a simple pandas dataframe
         >>> sbc.data(table_id='folk1a')
                 Folketal den 1. i kvartalet efter Indhold og tid
             0                                           5822763
 
-        Data with specific keywords returns a multi-indexed pandas dataframe
         >>> kon = sbc.variable_dict(code='KØN', values=['M', 'K'])
         >>> tid = sbc.variable_dict(code='Tid', values=['2018'])
         >>> df = sbc.data(table_id='bef5', variables=[tid, kon])
