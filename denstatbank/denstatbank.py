@@ -14,7 +14,6 @@ class StatBankClient:
         must be in Danish. Please see data() method docstring for details. 
         As long as Danish key codes are provided as input, one can use the 
         Class with English language settings.
-
     """
 
     def __init__(self, lang='da'):
@@ -34,6 +33,7 @@ class StatBankClient:
         self._lang = value
 
     def base_request(self, cat, params):
+        """Submits all POST request to API and returns response."""
         params.update({'lang': self.lang})
         try:
             resp = self.session.post(self._base_url+quote(cat), json=params)
@@ -72,7 +72,6 @@ class StatBankClient:
 
         Examples
         --------
-
         >>> sbc.subjects(['19'], recursive=True)
                  |--('19', 'Other')
                  |       |--('2473', 'Statistisk Årbog')
@@ -164,7 +163,6 @@ class StatBankClient:
 
         Examples
         --------
-
         >>> vdf = sbc.tableinfo(table_id='bef5', variables_df=True)
         >>> vdf.head()
           id     text variable
@@ -213,30 +211,20 @@ class StatBankClient:
 
         Examples
         --------
-
         Data with no specific keywords returns a simple pandas dataframe
         >>> sbc.data(table_id='folk1a')
                 Folketal den 1. i kvartalet efter Indhold og tid
             0                                           5822763
 
         Data with specific keywords returns a multi-indexed pandas dataframe
-        >>> fodland = sbc.variable_dict(code='fodland', values=['5101','5104'])
-        >>> kon = sbc.variable_dict('køn', ['M', 'K'])
-        >>> tid = sbc.variable_dict('Tid', ['2018', '2019'])
-        >>> df = sbc.data('bef5', as_df=True, variables=[kon, tid, fodland]) 
+        >>> kon = sbc.variable_dict(code='KØN', values=['M', 'K'])
+        >>> tid = sbc.variable_dict(code='Tid', values=['2018'])
+        >>> df = sbc.data(table_id='bef5', variables=[tid, kon])
         >>> df
-                               Folketal pr. 1. januar efter køn, fødeland, Indhold og tid
-        køn     fodland  tid                                                             
-        Mænd    Grønland 2018                                               7016         
-                         2019                                               7095         
-                Finland  2018                                               1266         
-                         2019                                               1263         
-        Kvinder Grønland 2018                                               9454         
-                         2019                                               9471         
-                Finland  2018                                               2766         
-                         2019                                               2787  
-
-
+                    Population 1. January by sex, Indhold and time
+        køn   tid
+        Men   2018                                         2876473
+        Women 2018                                         2904717
         """
         cat = 'data'
         params = dict(format='JSONSTAT', table=table_id)
@@ -268,7 +256,6 @@ class StatBankClient:
 
         Examples
         --------
-
         >>> tid = sbc.variable_dict('Tid', ['2018', '2019'])
         >>> tid
         {'code': 'Tid', 'values': ['2018', '2019']}
