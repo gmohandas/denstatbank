@@ -2,7 +2,7 @@
 ![denstatbank](https://github.com/gmohandas/denstatbank/workflows/denstatbank/badge.svg)
 
 A python wrapper to Statistics Denmark's Databank API.
-The package allows you to easily gather data on a variety of topics made available by [Statistics Denmark](https://www.dst.dk/en) 
+The package allows you to easily gather data on a variety of topics made available by [Statistics Denmark](https://www.dst.dk/en).
 
 The package provides a simple interface for professional statisticians, academics, policymakers, students, 
 and anyone interested in quantitative facts about Denmark.
