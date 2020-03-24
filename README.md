@@ -31,6 +31,8 @@ Quick Example
 `denstatbank` utilizes the power of `pandas`, a fast and flexible library
 eminently suited for data handling and analysis. 
 
+For documention, please [visit](https://denstatbank.readthedocs.io/en/latest/).
+
 ### Todo
 
 Examples demonstrating statistical analysis of data
