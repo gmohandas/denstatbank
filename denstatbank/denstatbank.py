@@ -43,7 +43,7 @@ class StatBankClient:
                 response_message = resp.json()['message']
                 print(response_message)
         except Exception as err:
-            print(err)
+            raise(err)
 
     def subjects(self, subjects=None, include_tables=False, recursive=False, as_tree=True):
         """Retrieves the basic subject(s) information for which tables exist in
@@ -91,13 +91,14 @@ class StatBankClient:
         params = dict(includeTables=include_tables, recursive=recursive)
         add_list_to_dict(params, subjects=subjects)
         resp = self.base_request(cat, params)
-        if not as_tree:
-            return resp
-        else:
-            if len(resp) > 0:
-                for d in resp:
-                    for g in subtabtree(d):
-                        print(g)
+        if resp is not None:
+            if not as_tree:
+                return resp
+            else:
+                if len(resp) > 0:
+                    for d in resp:
+                        for g in subtabtree(d):
+                            print(g)
 
     def tables(self, subjects=None, past_days=None, include_inactive=False, as_df=True):
         """Retrieves the complete list of tables present currently in the
@@ -140,11 +141,11 @@ class StatBankClient:
         cat = 'tables'
         params = dict(pastdays=past_days, includeinactive=include_inactive)
         add_list_to_dict(params, subjects=subjects)
-        rjson = self.base_request(cat, params)
-        if as_df:
-            return pd.DataFrame(rjson)
+        resp = self.base_request(cat, params)
+        if as_df and resp is not None:
+            return pd.DataFrame(resp)
         else:
-            return rjson
+            return resp
 
     def tableinfo(self, table_id, variables_df=False):
         """Retrieves table specific information from the StatBank database.
@@ -174,20 +175,21 @@ class StatBankClient:
         """
         cat = 'tableinfo'
         params = dict(table=table_id)
-        rjson = self.base_request(cat, params)
-        if variables_df:
-            var_df = pd.DataFrame()
-            varlist = rjson['variables']
-            for d in varlist:
-                df = pd.DataFrame(d['values'])
-                if params['lang'] == 'en':
-                    df['variable'] = d['text']
-                else:
-                    df['variable'] = d['id']
-                var_df = var_df.append(df)
-            return var_df
-        else:
-            return rjson
+        resp = self.base_request(cat, params)
+        if resp is not None:
+            if variables_df:
+                var_df = pd.DataFrame()
+                varlist = resp['variables']
+                for d in varlist:
+                    df = pd.DataFrame(d['values'])
+                    if params['lang'] == 'en':
+                        df['variable'] = d['text']
+                    else:
+                        df['variable'] = d['id']
+                    var_df = var_df.append(df)
+                return var_df
+            else:
+                return resp
 
     def data(self, table_id, as_df=True, variables=None, **kwargs):
         """Retrieves the data for a specific table from the StatBank
@@ -229,12 +231,12 @@ class StatBankClient:
         add_list_to_dict(params, variables=variables)
         params.update({k: v for k, v in kwargs.items() if k})
         codes = [d['code'].lower() for d in variables] if variables else []
-        rjson = self.base_request(cat, params)
-        if as_df:
-            ddict = rjson['dataset']
+        resp = self.base_request(cat, params)
+        if as_df and resp is not None:
+            ddict = resp['dataset']
             return data_dict_to_df(ddict, codes)
         else:
-            return rjson
+            return resp
 
     @staticmethod
     def variable_dict(code, values, **kw):
