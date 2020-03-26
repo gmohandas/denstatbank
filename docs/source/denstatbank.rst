@@ -6,8 +6,8 @@ Submodules
 
 .. toctree::
 
-   denstatbank.denstatbank
-   denstatbank.utils
+   Client
+   Utility functions
 
 Module contents
 ---------------

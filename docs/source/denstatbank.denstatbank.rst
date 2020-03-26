@@ -1,5 +1,5 @@
-denstatbank.denstatbank
-=======================
+Client
+======
 
 .. automodule:: denstatbank.denstatbank
    :members:
