@@ -30,8 +30,8 @@ def client():
 def test_base_request(client, monkeypatch):
     def mock_base_request(self, *args, **kwargs):
         return mock_tableinfo_resp
-    monkeypatch.setattr(StatBankClient, "base_request", mock_base_request)
-    r = client.base_request('data', lang='en')
+    monkeypatch.setattr(StatBankClient, "_base_request", mock_base_request)
+    r = client._base_request('data', lang='en')
     assert r == mock_tableinfo_resp
 
 
