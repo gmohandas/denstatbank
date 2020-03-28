@@ -42,8 +42,8 @@ class StatBankClient:
             else:
                 response_message = resp.json()['message']
                 print(response_message)
-        except Exception as err:
-            raise(err)
+        except Exception as ex:
+            raise ex
 
     def subjects(self, subjects=None, include_tables=False, recursive=False, as_tree=True):
         """Retrieves the basic subject(s) information for which tables exist in
