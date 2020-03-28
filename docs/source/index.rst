@@ -93,7 +93,7 @@ data. Pandas is a fast, popular and powerful library used for data analysis and
 manipulation. It is therefore well suited to be used with this package. 
 There are plenty of resources available to learn from if you are new to pandas.
 I would highly recommend this `book <https://wesmckinney.com/pages/book.html>`_ 
-by the creator of the library himself.
+by the creator of the pandas himself.
 
 
 Code Documentation
