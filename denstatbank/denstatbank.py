@@ -32,8 +32,11 @@ class StatBankClient:
                 'Language can only accept either "en" or "da" as values.')
         self._lang = value
 
-    def base_request(self, cat, params):
-        """Submits all POST request to API and returns response."""
+    def _base_request(self, cat, params):
+        """
+        Submits all POST request to API and returns response.
+        Used internally by all client facing methods.
+        """
         params.update({'lang': self.lang})
         try:
             resp = self.session.post(self._base_url+quote(cat), json=params)
@@ -90,7 +93,7 @@ class StatBankClient:
         cat = 'subjects'
         params = dict(includeTables=include_tables, recursive=recursive)
         add_list_to_dict(params, subjects=subjects)
-        resp = self.base_request(cat, params)
+        resp = self._base_request(cat, params)
         if resp is not None:
             if not as_tree:
                 return resp
@@ -141,7 +144,7 @@ class StatBankClient:
         cat = 'tables'
         params = dict(pastdays=past_days, includeinactive=include_inactive)
         add_list_to_dict(params, subjects=subjects)
-        resp = self.base_request(cat, params)
+        resp = self._base_request(cat, params)
         if as_df and resp is not None:
             return pd.DataFrame(resp)
         else:
@@ -175,7 +178,7 @@ class StatBankClient:
         """
         cat = 'tableinfo'
         params = dict(table=table_id)
-        resp = self.base_request(cat, params)
+        resp = self._base_request(cat, params)
         if resp is not None:
             if variables_df:
                 var_df = pd.DataFrame()
@@ -231,7 +234,7 @@ class StatBankClient:
         add_list_to_dict(params, variables=variables)
         params.update({k: v for k, v in kwargs.items() if k})
         codes = [d['code'].lower() for d in variables] if variables else []
-        resp = self.base_request(cat, params)
+        resp = self._base_request(cat, params)
         if as_df and resp is not None:
             ddict = resp['dataset']
             return data_dict_to_df(ddict, codes)
