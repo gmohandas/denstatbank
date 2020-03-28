@@ -10,11 +10,12 @@ denstatbank is a python wrapper to Statistics Denmark's Databank API.
 The package allows you to easily gather data on a variety of topics made 
 available by Statistics Denmark.
 
-Quick Start
-===========
+A walkthrough example
+---------------------
 
 Let us walkthrough a quick example of how to query for data on a specific
-topic. In this example, we shall look at population data for Denmark. 
+topic. The first step is to instantiate the client. This is easily done with 
+the following two lines of code.  
 
 .. code-block:: python
 
@@ -22,7 +23,9 @@ topic. In this example, we shall look at population data for Denmark.
    >>> sbc = StatBankClient(lang='en')
    
 
-Let's find a table to get data from the databank. 
+Now, let's find a table to get data from the databank. The tables method provides
+a list of all tables containing data currently available in the databank.
+Let's go with the very first one.
 
 .. code-block:: python
 
@@ -37,25 +40,30 @@ Let's find a table to get data from the databank.
    active                                                True
    variables         [region, sex, age, marital status, time]
 
-
-| Great! Now let's extract a subset of variable values to query data.
-| In this case, we get all the time periods for which data is available.
-| One way to do that is as shown below
+All data tables have values associated with certain variables specific
+to the table. The population table that we shall look at has five such
+variables with the names you see above.
+The variables themselves have a list of valid values. One quick way of
+finding acceptable values for the variables is by using the tableinfo
+method as follows:
 
 .. code-block:: python
 
    >>> vdf = sbc.tableinfo('folk1a', variables_df=True)
    >>> years = vdf[vdf['variable']=='time']['id'].tolist()
 
-| Now, let's query for the actual population data.
-| But first, we need to make a variable dictionary as follows
+We have now extracted the list of all acceptable values for the variable 'time'.
+Now, we need to put this inside a dictionary where the dictionary key
+is the variable name (in Danish). The variable_dict method that you can
+call with the client does this for you.
 
 .. code-block:: python
 
    >>> tid = sbc.variable_dict(code='tid', values=years)
 
-| Note: The variable key codes must be specified in Danish. In this case, 'tid' for time. 
-| Now, let's get the data into a pandas dataframe.
+Finally, we query the data with the table id and pass the variables
+dictionary inside of a list. You must use a list here since more than
+one variable can be passed. 
 
 .. code-block:: python
 
@@ -70,17 +78,55 @@ Let's find a table to get data from the databank.
    2009Q1                                            5511451
 
 
-| We utilize the pandas library in python which comes along part of the installation.
-| Pandas is a fast and powerful library well suited for data handling and analysis in python. 
+And there we have the population data. Let us quickly plot it to get a feel
+for the data.
+
+.. code-block:: python
+
+   >>> df.plot(style='o-', figsize=(10, 6))
+
+.. image:: demoplot.jpg
+
+
+denstatbank uses the pandas python library to facilitate the handling of 
+data. Pandas is a fast, popular and powerful library used for data analysis and
+manipulation. It is therefore well suited to be used with this package. 
+There are plenty of resources available to learn from if you are new to pandas.
+I would highly recommend this `book <https://wesmckinney.com/pages/book.html>`_ 
+by the creator of the library himself.
+
+
+Code Documentation
+------------------
+
+That was just a quick demonstration of what you can do. To learn more, 
+have a look at the detailed documentation of the client methods which 
+details the different parameter options and includes examples.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    denstatbank.denstatbank
    denstatbank.utils
 
-   
+
+Statistical Analysis
+--------------------
+
+I hope to include a couple of examples demonstrating statistical and time
+series analysis that you can perform on the data available via the API.
+You will be able to find them on the package 
+`github page <https://github.com/gmohandas/denstatbank>`_.
+
+
+Other Links
+-----------
+
+The documentation for the Databank API can be found 
+`here <https://www.dst.dk/en/Statistik/statistikbanken/api>`_.
+
+Here, is the official website of 
+`Statistics Denmark <https://www.dst.dk/en>`_.
 
 .. :caption: Contents:
 
