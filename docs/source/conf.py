@@ -11,6 +11,7 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
+import re
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 
@@ -21,8 +22,11 @@ project = 'denstatbank'
 copyright = '2020, Gopakumar Mohandas'
 author = 'Gopakumar Mohandas'
 
+with open("../../denstatbank/__init__.py", "rt", encoding="utf8") as f:
+    version = re.search(r'__version__\s=\s"(.*?)"', f.read()).group(1)
+
 # The full version, including alpha/beta/rc tags
-release = '0.3.1'
+release = version
 
 
 # -- General configuration ---------------------------------------------------
@@ -56,7 +60,7 @@ master_doc = 'index'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['tests/*.py', 'setup.py']
+exclude_patterns = ['../tests/*.py', '../setup.py']
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).

@@ -85,7 +85,7 @@ for the data.
 
    >>> df.plot(style='o-', figsize=(10, 6))
 
-.. image:: demoplot.jpg
+.. image:: ../../images/folk1a.jpg
 
 
 denstatbank uses the pandas python library to facilitate the handling of 
