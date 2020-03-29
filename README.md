@@ -26,7 +26,7 @@ Let us walkthrough a quick example of how to query for data on a specific
 topic. The first step is to instantiate the client. This is easily done with 
 the following two lines of code. 
 
-```python
+```
 >>> from denstatbank import StatBankClient
 >>> sbc = StatBankClient(lang='en')
 ```
@@ -35,7 +35,7 @@ Now, let's find a table to get data from the databank. The tables method provide
 a list of all tables containing data currently available in the databank.
 Let's go with the very first one.
 
-```python
+```
 >>> tdf = sbc.tables()
 >>> tdf.iloc[0]
 id                                                  FOLK1A
@@ -55,7 +55,7 @@ The variables themselves have a list of valid values. One quick way of
 finding acceptable values for the variables is by using the tableinfo
 method as follows:
 
-```python
+```
 >>> vdf = sbc.tableinfo('folk1a', variables_df=True)
 >>> years = vdf[vdf['variable']=='time']['id'].tolist()
 ```
@@ -65,7 +65,7 @@ Now, we need to put this inside a dictionary where the dictionary key
 is the variable name (in Danish). The variable_dict method that you can
 call with the client does this for you.
 
-```python
+```
 >>> tid = sbc.variable_dict(code='tid', values=years)
 ```
 
@@ -73,7 +73,7 @@ Finally, we query the data with the table id and pass the variables
 dictionary inside of a list. You must use a list here since more than
 one variable can be passed. 
 
-```python
+```
 >>> df = sbc.data(table_id='folk1a', variables=[tid])
 >>> df.head()
           Population at the first day of the quarter by Indhold and time
@@ -88,7 +88,7 @@ tid
 And there we have the population data. Let us quickly plot it to get a feel
 for the data.
 
-```python
+```
 >>> df.plot(style='o-', figsize=(10, 6))
 ```
 <img src="images/folk1a.jpg" width="600">
@@ -97,7 +97,7 @@ denstatbank uses the pandas python library to facilitate the handling of
 data. Pandas is a fast, popular and powerful library used for data analysis and
 manipulation. It is therefore well suited to be used with this package. 
 There are plenty of resources available to learn from if you are new to pandas.
-I would highly recommend this `book <https://wesmckinney.com/pages/book.html>`_ 
+I would highly recommend this [book](https://wesmckinney.com/pages/book.html) 
 by the creator of the pandas himself.
 
 
@@ -105,8 +105,8 @@ by the creator of the pandas himself.
 
 The package documentation can be found [here](https://denstatbank.readthedocs.io/en/latest/).
 
-The official API documentation can be found [here](https://www.dst.dk/en/Statistik/statistikbanken/api)
+The official API documentation can be found [here](https://www.dst.dk/en/Statistik/statistikbanken/api).
 
 ### Coming soon
 
-Examples demonstrating statistical analysis of data
+Examples demonstrating basic statistical analysis of data
