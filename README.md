@@ -12,8 +12,8 @@ quantitative facts about Denmark.
 
 ### Installation
 
-The package is listed on pypi - the python package index and 
-can be installed with pip with:
+The package is listed on pypi - the python package index, and 
+can be installed with pip as:
 ```
 pip install --upgrade denstatbank
 ```
@@ -33,7 +33,7 @@ the following two lines of code.
 
 Now, let's find a table to get data from the databank. The tables method provides
 a list of all tables containing data currently available in the databank.
-Let's go with the very first one.
+Let's take a look at the first table.
 
 ```
 >>> tdf = sbc.tables()
@@ -62,16 +62,16 @@ method as follows:
 
 We have now extracted the list of all acceptable values for the variable 'time'.
 Now, we need to put this inside a dictionary where the dictionary key
-is the variable name (in Danish). The variable_dict method that you can
-call with the client does this for you.
+is the variable name (in Danish, so 'time' becomes 'tid'). 
+The client has a method called `variable_dict()` which does this for you.
 
 ```
 >>> tid = sbc.variable_dict(code='tid', values=years)
 ```
 
-Finally, we query the data with the table id and pass the variables
-dictionary inside of a list. You must use a list here since more than
-one variable can be passed. 
+Finally, we query the data by passing the table id and the variables
+dictionary as a keyword arguments. The dictionary must be placed inside
+a list as the method can accept more than one variables dictionary.
 
 ```
 >>> df = sbc.data(table_id='folk1a', variables=[tid])
@@ -103,9 +103,9 @@ by the creator of the pandas himself.
 
 ### Documentation
 
-The package documentation can be found [here](https://denstatbank.readthedocs.io/en/latest/).
+The detailed package documentation can be found [here](https://denstatbank.readthedocs.io/en/latest/).
 
-The official API documentation can be found [here](https://www.dst.dk/en/Statistik/statistikbanken/api).
+The official Databank API documentation can be found [here](https://www.dst.dk/en/Statistik/statistikbanken/api).
 
 ### Coming soon
 
