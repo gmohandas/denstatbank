@@ -107,6 +107,6 @@ The detailed package documentation can be found [here](https://denstatbank.readt
 
 The official Databank API documentation can be found [here](https://www.dst.dk/en/Statistik/statistikbanken/api).
 
-### Coming soon
+### To do
 
 Examples demonstrating basic statistical analysis of data
