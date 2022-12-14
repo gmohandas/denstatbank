@@ -91,7 +91,7 @@ for the data.
 ```
 >>> df.plot(style='o-', figsize=(10, 6))
 ```
-<img src="images/folk1a.jpg" width="600">
+<img src="folk1a.jpg" width="600">
 
 denstatbank uses the pandas python library to facilitate the handling of 
 data. Pandas is a fast, popular and powerful library used for data analysis and
