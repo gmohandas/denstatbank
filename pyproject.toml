@@ -17,9 +17,24 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    pandas
-    pytest
-    requests
+    attrs==22.1.0
+    certifi==2022.9.24
+    chardet==5.0.0
+    idna==3.4
+    importlib-metadata==5.1.0
+    more-itertools==9.0.0
+    packaging==21.3
+    pandas>=1.4.0
+    pluggy==1.0.0
+    py==1.11.0
+    pyparsing==3.0.9
+    pytest==7.2.0
+    python-dateutil==2.8.2
+    pytz>=2020.1
+    requests==2.28.0
+    six==1.16.0
+    wcwidth==0.2.5
+    zipp==3.11.0
 ]
 
 [project.urls]
