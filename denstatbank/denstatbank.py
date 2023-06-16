@@ -189,7 +189,7 @@ class StatBankClient:
                         df['variable'] = d['text']
                     else:
                         df['variable'] = d['id']
-                    var_df = var_df.append(df)
+                    var_df = pd.concat([var_df, df])
                 return var_df
             else:
                 return resp
