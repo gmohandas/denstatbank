@@ -106,7 +106,3 @@ by the creator of the pandas himself.
 The detailed package documentation can be found [here](https://denstatbank.readthedocs.io/en/latest/).
 
 The official Databank API documentation can be found [here](https://www.dst.dk/en/Statistik/statistikbanken/api).
-
-### To do
-
-Examples demonstrating basic statistical analysis of data
